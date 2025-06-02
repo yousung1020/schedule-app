@@ -20,7 +20,7 @@ function Login(){
 
     const handelStartGame = () => {
         const queryParams = new URLSearchParams(userInfo); // 입력 데이터를 쿼리 파라미터로 변환
-        nav(`/startGame?${queryParams.toString()}`); // startGame 경로로 이동하면서 데이터(사용자 정보) 전달 
+        nav(`/calender?${queryParams.toString()}`); // startGame 경로로 이동하면서 데이터(사용자 정보) 전달 
     }
 
     return(
