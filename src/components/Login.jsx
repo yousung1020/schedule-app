@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import "./InputPage.css"
+import "../css/Login.css";
 
-function InputPage(){
+function Login(){
     // 사용자 이름 및 학과 정보 입력 상태
     const [userInfo, setUserInfo] = useState({
         id: "",
@@ -42,4 +42,4 @@ function InputPage(){
     )
 }
 
-export default InputPage;
+export default Login;
