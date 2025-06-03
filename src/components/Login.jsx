@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import "../css/Login.css";
 
 function Login(){
-    // 사용자 이름 및 학과 정보 입력 상태
+    // 사용자 이름 및 전화번호 입력 상태
     const [userInfo, setUserInfo] = useState({
-        id: "",
-        pwd: "",
+        name: "",
+        phone: "",
     });
 
     const nav = useNavigate(); // 특정 경로로 이동할 수 있는 함수
@@ -19,15 +19,30 @@ function Login(){
     }
 
     const handelStartGame = () => {
-        const queryParams = new URLSearchParams(userInfo); // 입력 데이터를 쿼리 파라미터로 변환
-        nav(`/calender?${queryParams.toString()}`); // startGame 경로로 이동하면서 데이터(사용자 정보) 전달 
+      // 비구조화 할당
+      const {name, phone} = userInfo;
+
+      // 사용자별 고유 키 생성
+      const userKey = `${name}_${phone}`;
+      // 현재 로그인 사용자 정보 저장
+      localStorage.setItem('userName',userInfo.name);
+      localStorage.setItem('userPhone',userInfo.phone);
+
+      // 사용자별 일정 정보가 없으면 빈 배열로 초기화 ( 처음 로그인한 경우)
+      if (!localStorage.getItem(`schedule_${userKey}`)){
+        localStorage.setItem(`schedule_${userKey}`, JSON.stringify([]));
+      }
+
+      // 쿼리 파라미터 전달하면서 페이지 이동
+      const queryParams = new URLSearchParams(userInfo);
+      nav(`/calendar?${queryParams.toString()}`);
     }
 
     return(
       <>
         <div className='container'>
           <div className='input-section'>
-            <h1>사용자 정보 입력</h1>
+            <h2>사용자 정보 입력</h2>
 
             <input type="text" name="name" value={userInfo.name} onChange={handleUserInfo} placeholder='이름'/>
             <input type="text" name="phone" value={userInfo.phone} onChange={handleUserInfo} placeholder='전화번호'/>
