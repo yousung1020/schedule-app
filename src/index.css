@@ -24,8 +24,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -65,4 +63,17 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.react-calendar {
+  width: 60% !important; /* 컨테이너 크기에 맞추기 */
+  height: 600px;
+  max-width: none !important;
+  font-size: 1.5em; /* 달력 전체 글자 크기 키우기 */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.react-calendar__tile {
+  padding: 15px 0; /* 날짜칸 크기 키우기 */
 }

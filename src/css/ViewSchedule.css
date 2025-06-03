@@ -1,0 +1,40 @@
+.view-schedule-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.view-schedule-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.schedule-detail-label {
+  font-weight: 600;
+  margin-top: 15px;
+  color: #343a40;
+}
+
+.schedule-detail-value {
+  font-size: 1.05rem;
+  margin-top: 5px;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.button-group .btn {
+  min-width: 100px;
+}
