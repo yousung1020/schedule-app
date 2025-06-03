@@ -19,23 +19,8 @@ function Login(){
     }
 
     const handelStartGame = () => {
-      // 비구조화 할당
-      const {name, phone} = userInfo;
-
-      // 사용자별 고유 키 생성
-      const userKey = `${name}_${phone}`;
-      // 현재 로그인 사용자 정보 저장
-      localStorage.setItem('userName',userInfo.name);
-      localStorage.setItem('userPhone',userInfo.phone);
-
-      // 사용자별 일정 정보가 없으면 빈 배열로 초기화 ( 처음 로그인한 경우)
-      if (!localStorage.getItem(`schedule_${userKey}`)){
-        localStorage.setItem(`schedule_${userKey}`, JSON.stringify([]));
-      }
-
-      // 쿼리 파라미터 전달하면서 페이지 이동
-      const queryParams = new URLSearchParams(userInfo);
-      nav(`/calendar?${queryParams.toString()}`);
+        const queryParams = new URLSearchParams(userInfo); // 입력 데이터를 쿼리 파라미터로 변환
+        nav(`/startGame?${queryParams.toString()}`); // startGame 경로로 이동하면서 데이터(사용자 정보) 전달 
     }
 
     return(
