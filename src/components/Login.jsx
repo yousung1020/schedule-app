@@ -29,8 +29,8 @@ function Login(){
       localStorage.setItem('userPhone',userInfo.phone);
 
       // 사용자별 일정 정보가 없으면 빈 배열로 초기화 ( 처음 로그인한 경우)
-      if (!localStorage.getItem(`schedule_${userKey}`)){
-        localStorage.setItem(`schedule_${userKey}`, JSON.stringify([]));
+      if (!localStorage.getItem(`user_${userKey}`)){
+        localStorage.setItem(`user_${userKey}`, JSON.stringify([]));
       }
 
       // 쿼리 파라미터 전달하면서 페이지 이동
