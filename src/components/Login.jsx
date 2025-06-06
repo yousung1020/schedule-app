@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "react-bootstrap"
 import "../css/Login.css";
 
 function Login(){
@@ -18,7 +19,7 @@ function Login(){
         });
     }
 
-    const handelStartGame = () => {
+    const handleLogin = () => {
       // 비구조화 할당
       const {name, phone} = userInfo;
 
@@ -46,7 +47,8 @@ function Login(){
 
             <input type="text" name="name" value={userInfo.name} onChange={handleUserInfo} placeholder='이름'/>
             <input type="text" name="phone" value={userInfo.phone} onChange={handleUserInfo} placeholder='전화번호'/>
-            <button onClick={handelStartGame} className='game-button'>로그인</button>
+            <button onClick={handleLogin} className='btn btn-primary'>로그인</button>
+            <button onClick={handleLogin} className='btn btn-primary'>회원가입</button>
           </div>
           <div className='el-info-section'>
             <h1>회원가입</h1>

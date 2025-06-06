@@ -62,14 +62,8 @@ function MainCalendar() {
   return (
     <>
       {/* 상단 고정 네비게이션 바: 로그아웃 버튼과 사용자 환영 메시지 */}
-      <div style={{
-        position: "fixed", top: 0, left: 0, right: 0, height: "60px",
-        backgroundColor: "#f8f9fa", borderBottom: "1px solid #ddd",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        zIndex: 1000
-      }}>
-        <Button variant="outline-danger" onClick={handleLogout}
-          style={{ position: "absolute", left: 20 }}>
+      <div>
+        <Button variant="outline-danger" onClick={handleLogout}>
           로그아웃
         </Button>
         <div style={{ fontWeight: "bold", fontSize: "18px" }}>
@@ -78,23 +72,11 @@ function MainCalendar() {
       </div>
 
       {/* 메인 컨테이너: 화면 중앙에 달력과 일정 영역 배치 */}
-      <Container fluid style={{
-        marginTop: "80px", height: "calc(100vh - 80px)", display: "flex",
-        justifyContent: "center", alignItems: "center", maxWidth:"1800px",
-        transition: "all 0.4s ease"
-      }}>
+      <Container>
         {/* 내부 래퍼: 달력과 일정 박스의 flex 레이아웃 및 간격 조절 */}
-        <div style={{
-          display: "flex", width: selectedDate ? "90%" : "80%",
-          maxWidth: "1600px", transition: "all 0.4s ease",
-          justifyContent:"center",
-          alignItems: "flex-start", gap: "10px"
-        }}>
+        <div>
           {/* 달력 영역: 달력 컴포넌트와 일정 요약 텍스트 표시 */}
-          <div style={{
-            flex: selectedDate ? "0 0 65%" : "0 0 100%",
-            display: "flex", justifyContent: "flex-end"
-          }}>
+          <div>
             <Calendar
               onChange={onDateClick}
               value={selectedDate || new Date()}
@@ -112,10 +94,7 @@ function MainCalendar() {
                     return a.time.localeCompare(b.time);
                   }).slice(0, 2);
                   return (
-                    <div style={{
-                      marginTop: 2, fontSize: "0.65em", color: "#444",
-                      lineHeight: 1.1
-                    }}>
+                    <div>
                       {daySchedules.map((item) => (
                         <div key={item.id} title={item.title} style={{
                           whiteSpace: "nowrap", overflow: "hidden",
@@ -133,11 +112,7 @@ function MainCalendar() {
           </div>
 
           {/* 일정 목록 영역: 선택한 날짜의 일정 표시 및 추가/삭제 버튼 */}
-          <div style={{
-            flex: "0 0 40%", backgroundColor: "#f9f9f9", padding: "30px",
-            borderRadius: "8px", boxShadow: "0 0 15px rgba(0,0,0,0.15)",
-            maxHeight: "80vh", overflowY: "auto", fontSize: "1.15rem", marginLeft:"30px"
-          }}>
+          <div>
             {/* 선택된 날짜 표시 */}
             {selectedDate && (
               <p><strong>{selectedDate.toLocaleDateString()}</strong></p>
@@ -150,11 +125,7 @@ function MainCalendar() {
 
             {/* 선택된 날짜 일정 리스트 */}
             {selectedDate && filteredSchedules.map((item) => (
-              <div key={item.id} onClick={()=> ScheduleClick(item.id)}
-                style={{display: "flex", alignItems: "center", marginBottom: "10px",
-                backgroundColor: item.completed ? "#d4edda" : "transparent",
-                padding: "5px 10px", borderRadius: "5px"
-              }}>
+              <div key={item.id} onClick={()=> ScheduleClick(item.id)}>
                 <input type="checkbox" checked={item.completed} onChange={() => handleCheckboxToggle(item.id)} style={{ marginRight: "10px" }}
                 onClick={e => e.stopPropagation()}/>
                 <div style={{ flexGrow: 1 }}>
