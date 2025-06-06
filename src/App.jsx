@@ -5,7 +5,7 @@ import AddSchedule from './components/AddSchedule';
 import UpdateSchedule from './components/UpdateSchedule';
 import NotFound from './components/NotFound';
 import ViewSchedule from './components/ViewSchedule';
-import EditSchedule from './components/EditSchedule';
+import Register from './components/Register';
 
 
 function App(){
@@ -17,7 +17,7 @@ function App(){
           <Route path='/add-schedule' element={<AddSchedule/>}/>
           <Route path='/update-schedule' element={<UpdateSchedule/>}/>
           <Route path='/view-schedule/:id' element={<ViewSchedule/>}/>
-          <Route path='/edit-schedule/:id' element={<EditSchedule/>}/>
+          <Route path='/register' element={<Register/>}/>
           <Route path='*' element={<NotFound />}/>
         </Routes>
       </Router>
