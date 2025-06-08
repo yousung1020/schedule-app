@@ -35,7 +35,7 @@ function Login(){
       if((user.id === userInfo.id) && (user.pwd === userInfo.pwd)){
         // 사용자별 고유 키 생성
         const userKey = `${user.name}${userInfo.id}_${userInfo.pwd}`;
-
+        userInfo.name = user.name;
         // 사용자별 일정 정보가 없으면 빈 배열로 초기화 (처음 로그인한 경우)
         if (!localStorage.getItem(`${userKey}`)){
           localStorage.setItem(`${userKey}`, JSON.stringify([]));
