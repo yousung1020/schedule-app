@@ -28,7 +28,6 @@ function Login(){
   const StartCalender = () => {
     // 로컬스토리지에 아무 값도 없으면 빈 배열로 초기화
     const Users = JSON.parse(localStorage.getItem(localStorageKey)) || [];
-    const LoginUser = JSON.parse(localStorage.getItem("Loginuser")) || [];
 
     // 입력된 id 값과 pwd 값이 기존 로컬 스토리지에 저장된 정보와 같으면 로그인 성공!
     for(let user of Users){
@@ -50,7 +49,7 @@ function Login(){
     }
     
     // for문을 다 돌았음에도 일치하는 정보가 없으면 로그인 실패!
-    alert("로그인 정보가 없습니다.");
+    alert("아이디 또는 비밀번호가 올바르지 않습니다.");
     console.log("롸");
   }
 
@@ -61,7 +60,7 @@ function Login(){
           <h2>사용자 정보 입력</h2>
 
           <input type="text" name="id" value={userInfo.id} onChange={handleUserInfo} placeholder='아이디'/>
-          <input type="text" name="pwd" value={userInfo.pwd} onChange={handleUserInfo} placeholder='비밀번호'/>
+          <input type="password" name="pwd" value={userInfo.pwd} onChange={handleUserInfo} placeholder='비밀번호'/>
           <Button onClick={StartCalender} className='game-button'>로그인</Button>
         </div>
         <div className='el-info-section'>
