@@ -16,7 +16,7 @@ function App(){
           <Route path='/calendar' element={<MainCalendar />} />
           <Route path='/add-schedule' element={<AddSchedule/>}/>
           <Route path='/update-schedule' element={<UpdateSchedule/>}/>
-          <Route path='/view-schedule/:id' element={<ViewSchedule/>}/>
+          <Route path='/view-schedule' element={<ViewSchedule/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='*' element={<NotFound />}/>
         </Routes>
