@@ -9,7 +9,6 @@ function Login(){
   const [userInfo, setUserInfo] = useState({
       id: "",
       pwd : "",
-      name : ""
   });
 
   const nav = useNavigate(); // 특정 경로로 이동할 수 있는 함수
@@ -29,13 +28,15 @@ function Login(){
   const StartCalender = () => {
     // 로컬스토리지에 아무 값도 없으면 빈 배열로 초기화
     const Users = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+    const LoginUser = JSON.parse(localStorage.getItem("Loginuser")) || [];
 
     // 입력된 id 값과 pwd 값이 기존 로컬 스토리지에 저장된 정보와 같으면 로그인 성공!
     for(let user of Users){
       if((user.id === userInfo.id) && (user.pwd === userInfo.pwd)){
         // 사용자별 고유 키 생성
-        const userKey = `${user.name}${userInfo.id}_${userInfo.pwd}`;
-        userInfo.name = user.name;
+        const userKey = `${userInfo.id}_${userInfo.pwd}`;
+        const LoginUser = {name:user.name,id:userInfo.id,pwd:userInfo.pwd};
+        localStorage.setItem(`LoginUser`,JSON.stringify(LoginUser));
         // 사용자별 일정 정보가 없으면 빈 배열로 초기화 (처음 로그인한 경우)
         if (!localStorage.getItem(`${userKey}`)){
           localStorage.setItem(`${userKey}`, JSON.stringify([]));
