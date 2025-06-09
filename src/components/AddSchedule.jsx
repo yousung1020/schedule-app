@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import Schedule from './Schedule'
 import { Button } from 'react-bootstrap';
 import { v4} from 'uuid';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 function AddSchedule() {
   const nav = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const schedate = queryParams.get('date');
   const [userInfo, setUserInfo] = useState({
     id: "",
     pwd: "",
@@ -20,6 +23,9 @@ function AddSchedule() {
    useEffect(() => {
     const userName = JSON.parse(localStorage.getItem('LoginUser'));
     setUserInfo(userName);
+    setAddSche(prev=> ({
+      ...prev, date: schedate
+    }));
     }, []);
 
   const handleUserInfo = (e) => {
