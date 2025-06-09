@@ -5,7 +5,6 @@ import { v4} from 'uuid';
 import { useNavigate } from 'react-router';
 function AddSchedule() {
   const nav = useNavigate();
-  const queryParams = new URLSearchParams(location.search);
   const [userInfo, setUserInfo] = useState({
     id: "",
     pwd: "",
@@ -19,8 +18,8 @@ function AddSchedule() {
     time:""
   });
    useEffect(() => {
-      setUserInfo({id: queryParams.get('id'), pwd: queryParams.get('pwd'), name: queryParams.get('name')});
-  
+    const userName = JSON.parse(localStorage.getItem('LoginUser'));
+    setUserInfo(userName);
     }, []);
 
   const handleUserInfo = (e) => {
@@ -43,8 +42,8 @@ function AddSchedule() {
       alert("시간을 정하세요.");
       return;
     }
-    const storageKey = `${userInfo.name}_${userInfo.id}_${userInfo.pwd}`;
-    const existing = JSON.parse(localStorage.getItem(storageKey)) || [];
+    const storageKey = `${userInfo.id}_${userInfo.pwd}`;
+    const existing = JSON.parse(localStorage.getItem(storageKey));
     
     const setid = ({
       ...addSche,
@@ -52,12 +51,14 @@ function AddSchedule() {
     })
     const add = [...existing, setid]
     localStorage.setItem(storageKey,JSON.stringify(add));
-    const queryParam = new URLSearchParams(userInfo);
-    nav(`/calendar?${queryParam.toString()}`);
+    const {id , pwd} = userInfo;
+    const queryParams = new URLSearchParams({id,pwd});
+    nav(`/calendar?${queryParams.toString()}`);
   }
   const cancelbtn = () => {
-    const queryParam = new URLSearchParams(userInfo);
-    nav(`/calendar?${queryParam.toString()}`);
+    const {id , pwd} = userInfo;
+    const queryParams = new URLSearchParams({id,pwd});
+    nav(`/calendar?${queryParams.toString()}`);
   }
   return(
     <div>

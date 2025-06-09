@@ -11,7 +11,8 @@ function MainCalendar() {
 
   const [userInfo, setUserInfo] = useState({
     id: "",
-    pwd: ""
+    pwd: "",
+    name: "",
   });
   
   // 일정 정보를 나타내는 상태

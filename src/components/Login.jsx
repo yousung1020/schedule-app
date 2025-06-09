@@ -28,16 +28,18 @@ function Login(){
   const StartCalender = () => {
     // 로컬스토리지에 아무 값도 없으면 빈 배열로 초기화
     const Users = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+    const LoginUser = JSON.parse(localStorage.getItem("Loginuser")) || [];
 
     // 입력된 id 값과 pwd 값이 기존 로컬 스토리지에 저장된 정보와 같으면 로그인 성공!
     for(let user of Users){
       if((user.id === userInfo.id) && (user.pwd === userInfo.pwd)){
         // 사용자별 고유 키 생성
         const userKey = `${userInfo.id}_${userInfo.pwd}`;
-
+        const LoginUser = {name:user.name,id:userInfo.id,pwd:userInfo.pwd};
+        localStorage.setItem(`LoginUser`,JSON.stringify(LoginUser));
         // 사용자별 일정 정보가 없으면 빈 배열로 초기화 (처음 로그인한 경우)
-        if (!localStorage.getItem(`user_${userKey}`)){
-          localStorage.setItem(`user_${userKey}`, JSON.stringify([]));
+        if (!localStorage.getItem(`${userKey}`)){
+          localStorage.setItem(`${userKey}`, JSON.stringify([]));
         }
 
         // 쿼리 파라미터 전달하면서 페이지 이동
@@ -58,7 +60,7 @@ function Login(){
         <div className='input-section'>
           <h2>사용자 정보 입력</h2>
 
-          <input type="text" name="id" value={userInfo.id} onChange={handleUserInfo} placeholder='이름'/>
+          <input type="text" name="id" value={userInfo.id} onChange={handleUserInfo} placeholder='아이디'/>
           <input type="text" name="pwd" value={userInfo.pwd} onChange={handleUserInfo} placeholder='비밀번호'/>
           <Button onClick={StartCalender} className='game-button'>로그인</Button>
         </div>
