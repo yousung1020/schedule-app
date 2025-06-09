@@ -33,12 +33,6 @@ function UpdateSchedule() {
       setUpdateSche(scheduleData);
     }
   },[]);
-  const handleUserInfo = (e) => {
-  setUpdateSche({
-      ...updateSche,
-     [e.target.name]: e.target.value
-    });
-  }
 
   const Cancelbtn = () => {
     nav(`/view-schedule?id=${scheId}`);
