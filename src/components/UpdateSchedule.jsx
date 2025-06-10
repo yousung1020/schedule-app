@@ -25,36 +25,40 @@ function UpdateSchedule() {
     setUserInfo(username);
     const userKey = `${username.id}_${username.pwd}`;
     const scheduleData = JSON.parse(localStorage.getItem(userKey));
-    // 배열인지 아닌지 확인
-    if(Array.isArray(scheduleData)){
-      const target = scheduleData.find(item => item.id === scheId);
-      setUpdateSche(target);
-    } else if(scheduleData.id === scheId){
-      setUpdateSche(scheduleData);
-    }
+    const target = scheduleData.find(item => item.id === scheId);
+    setUpdateSche(target);
   },[]);
-
+  const handleUserInfo = (e) => {
+    setUpdateSche({
+        ...updateSche,
+        [e.target.name]: e.target.value
+    });
+ 
+  }
   const Cancelbtn = () => {
     nav(`/view-schedule?id=${scheId}`);
   }
   const Updatebtn = () => {
+    if(!updateSche.title){
+      alert("일정을 입력하세요.");
+      return;
+    }
+    if(!updateSche.desc){
+      alert("내용을 입력하세요.");
+      return;
+    }
+    if(!updateSche.time){
+      alert("시간을 정하세요.");
+      return;
+    }
     if(!window.confirm("일정을 수정하시겠습니까?")) return;
     
     const userKey = `${userInfo.id}_${userInfo.pwd}`;
     const scheduleData = JSON.parse(localStorage.getItem(userKey));
-    // 배열인지 아닌지 확인
-    if(Array.isArray(scheduleData)){
-      // 순회하면서 수정된 일정으로 교체
-      const Updated = scheduleData.map(item =>
+    const Updated = scheduleData.map(item =>
         item.id === scheId ? updateSche : item);
-      localStorage.setItem(userKey,JSON.stringify(Updated));
-    }
-    else if(scheduleData.id === scheId){
-      localStorage.setItem(userKey,JSON.stringify(updateSche));
-    }
-    const {id , pwd} = userInfo;
-    const queryParams = new URLSearchParams({id,pwd});
-    nav(`/calendar?${queryParams.toString()}`);
+    localStorage.setItem(userKey,JSON.stringify(Updated));
+    nav(`/calendar`);
   }
   return (
     <div>

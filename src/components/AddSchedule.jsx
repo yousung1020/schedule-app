@@ -18,7 +18,8 @@ function AddSchedule() {
     date:"",
     title:"",
     desc:"",
-    time:""
+    time:"",
+    completed:false
   });
   
    useEffect(() => {
@@ -58,14 +59,10 @@ function AddSchedule() {
     })
     const add = [...existing, setid]
     localStorage.setItem(storageKey,JSON.stringify(add));
-    const {id , pwd} = userInfo;
-    const queryParams = new URLSearchParams({id,pwd});
-    nav(`/calendar?${queryParams.toString()}`);
+    nav(`/calendar`);
   }
   const cancelbtn = () => {
-    const {id , pwd} = userInfo;
-    const queryParams = new URLSearchParams({id,pwd});
-    nav(`/calendar?${queryParams.toString()}`);
+    nav(`/calendar`);
   }
   return(
     <div>
