@@ -39,15 +39,15 @@ function UpdateSchedule() {
     nav(`/view-schedule?id=${scheId}`);
   }
   const Updatebtn = () => {
-    if(!addSche.title){
+    if(!updateSche.title){
       alert("일정을 입력하세요.");
       return;
     }
-    if(!addSche.desc){
+    if(!updateSche.desc){
       alert("내용을 입력하세요.");
       return;
     }
-    if(!addSche.time){
+    if(!updateSche.time){
       alert("시간을 정하세요.");
       return;
     }
