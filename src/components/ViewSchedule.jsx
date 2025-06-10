@@ -31,9 +31,7 @@ function ViewSchedule() {
   },[]);
 
   const gobackbtn = () => {
-    const {id , pwd} = userInfo;
-    const queryParams = new URLSearchParams({id,pwd});
-    nav(`/calendar?${queryParams.toString()}`);
+    nav(`/calendar`);
   }
 
   const Updatebtn = () => {
