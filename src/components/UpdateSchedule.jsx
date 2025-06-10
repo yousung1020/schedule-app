@@ -34,8 +34,8 @@ function UpdateSchedule() {
     }
   },[]);
   const handleUserInfo = (e) => {
-    setAddSche({
-        ...addSche,
+    setUpdateSche({
+        ...updateSche,
         [e.target.name]: e.target.value
     });
  
