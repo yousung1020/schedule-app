@@ -9,7 +9,6 @@ function Login(){
   const [userInfo, setUserInfo] = useState({
       id: "",
       pwd : "",
-      name : ""
   });
 
   const nav = useNavigate(); // 특정 경로로 이동할 수 있는 함수
@@ -34,22 +33,20 @@ function Login(){
     for(let user of Users){
       if((user.id === userInfo.id) && (user.pwd === userInfo.pwd)){
         // 사용자별 고유 키 생성
-        const userKey = `${user.name}${userInfo.id}_${userInfo.pwd}`;
-        userInfo.name = user.name;
+        const userKey = `${userInfo.id}_${userInfo.pwd}`;
+        const loginUser = {name:user.name,id:userInfo.id,pwd:userInfo.pwd};
+        localStorage.setItem(`LoginUser`,JSON.stringify(loginUser));
         // 사용자별 일정 정보가 없으면 빈 배열로 초기화 (처음 로그인한 경우)
         if (!localStorage.getItem(`${userKey}`)){
           localStorage.setItem(`${userKey}`, JSON.stringify([]));
         }
-
-        // 쿼리 파라미터 전달하면서 페이지 이동
-        const queryParams = new URLSearchParams(userInfo);
-        nav(`/calendar?${queryParams.toString()}`);
+        nav(`/calendar`);
         return;
       }
     }
     
     // for문을 다 돌았음에도 일치하는 정보가 없으면 로그인 실패!
-    alert("로그인 정보가 없습니다.");
+    alert("아이디 또는 비밀번호가 올바르지 않습니다.");
     console.log("롸");
   }
 
@@ -60,7 +57,7 @@ function Login(){
           <h2>사용자 정보 입력</h2>
 
           <input type="text" name="id" value={userInfo.id} onChange={handleUserInfo} placeholder='아이디'/>
-          <input type="text" name="pwd" value={userInfo.pwd} onChange={handleUserInfo} placeholder='비밀번호'/>
+          <input type="password" name="pwd" value={userInfo.pwd} onChange={handleUserInfo} placeholder='비밀번호'/>
           <Button onClick={StartCalender} className='game-button'>로그인</Button>
         </div>
         <div className='el-info-section'>
