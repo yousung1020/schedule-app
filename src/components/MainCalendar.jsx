@@ -8,21 +8,20 @@ function MainCalendar() {
   // search에 쿼리 파라미터 값이 있으며, URLSearchParams 객체를 통해 쿼리 파라미터를 객체를 다루듯이 데이터를 편하게 사용 가능!!
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+  const nav = useNavigate();
 
   const [userInfo, setUserInfo] = useState({
     id: "",
-    pwd: "",
-    name: "",
+    pwd: ""
   });
   
-  // 일정 정보를 나타내는 상태
-  const [schedule, setSchedule] = useState([]);
-
-  // 캘린더의 날짜를 클릭했는지 상태
-  const [dateClick, setDateClick] = useState(false);
+  // 선택된 날짜 상태
+  const [selectedDate, setSelectedDate] = useState(null);
+  // 선택된 날짜의 일정 상태
+  const [selectedSchedule, setSelectedSchedule] = useState([]);
 
   const handleDate = (date) => {
-    console.log(date.getDate());
+    setSelectedDate(date);
   }
 
   useEffect(() => {
@@ -30,11 +29,23 @@ function MainCalendar() {
 
   }, []);
 
-  return(
-    <>
-      <Calendar onChange={handleDate}/>
+  useEffect(() => {
 
-    </>
+  }, [selectedDate]);
+
+  return(
+    <div>
+      <header>
+        <button onClick={() => {nav("/")}}>로그아웃</button>
+      </header>
+      <Calendar onChange={handleDate}/>
+      {dateClick && (
+        <div>
+          test
+        </div>
+      )}
+
+    </div>
   )
 }
 
