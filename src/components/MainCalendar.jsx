@@ -17,7 +17,7 @@ function MainCalendar() {
   const userInfo = JSON.parse(localStorage.getItem("LoginUser"));
   // 로그인한 유저의 일정이 있으면 해당 일정을 초기값으로, 없으면 빈배열로 초기화
   const [userSchedule, setUserSchedule] = useState(() => {
-    const scheduleData = localStorage.getItem(`${userInfo.id}_${userInfo.pwd}`) || [];
+    const scheduleData = localStorage.getItem(`${userInfo.id}_${userInfo.pwd}`) || "[]";
     return JSON.parse(scheduleData);
   } 
   );
@@ -29,15 +29,11 @@ function MainCalendar() {
 
   // 캘린더에서 날짜를 클릭했을 때
   const handleDate = (date) => {
-    setSelectedDate(date);
-
     // 선택된 날짜에 해당하는 일정을 가져오기 위해 기존 Date 객체 포맷팅 ex)2025-06-10
     const formatDate = moment(date).format("YYYY-MM-DD");
-    console.log(userSchedule);
-    const filterSchedule = userSchedule.filter((sche) => (
-      sche.date === formatDate
-    ));
-    setSelectedSchedule(filterSchedule);
+
+    setSelectedDate(formatDate);
+    console.log(selectedDate);
   }
 
   // 날짜를 일, 요일로 포맷팅
@@ -54,18 +50,45 @@ function MainCalendar() {
     ))
 
     setUserSchedule(updateSchedule);
-    localStorage.setItem(`${userInfo.id}_${userInfo.pwd}`, JSON.stringify(userSchedule))
   }
 
   const deleteSchedule = (scheId) => {
-    const updateSchedule = userSchedule.filter((sche) => (
-      scheId !== sche.id
-    ))
+    if(scheId === undefined){
+      const removeCheck = userSchedule.some((sche) => sche.completed === true);
+      if(!removeCheck){
+        alert("완료된 일정이 없습니다.");
+        return;
+      }
 
-    localStorage.setItem(`${userInfo.id}_${userInfo.pwd}`, JSON.stringify(updateSchedule));
+      if(!window.confirm("정말 완료된 일정을 모두 제거하시겠습니까?")) return;
+      // completed 프로퍼티 값이 false만 반환
+      const removeCompleteSchedule = userSchedule.filter((sche) => sche.completed === false);
+      setUserSchedule(removeCompleteSchedule);
+    } else{
+      if(!window.confirm("정말 해당 일정을 제거하시겠습니까?")) return;
+      const updateSchedule = userSchedule.filter((sche) => (
+        scheId !== sche.id
+      ))
+
+      setUserSchedule(updateSchedule);
+    }
   }
 
   useEffect(() => {
+    // userSchedule 변경시
+    localStorage.setItem(`${userInfo.id}_${userInfo.pwd}`, JSON.stringify(userSchedule));
+
+    // 선택된 날짜가 있으면
+    if(selectedDate){
+      const filterSchedule = userSchedule.filter((sche) => (
+        sche.date === selectedDate
+      ))
+
+      setSelectedSchedule(filterSchedule);
+    } else{
+      setSelectedSchedule([]);
+    }
+
   }, [userSchedule, selectedDate]);
 
   return(
@@ -95,6 +118,10 @@ function MainCalendar() {
           {selectedDate && (
           <div>
             {formatDay(selectedDate)}
+            <div>
+              <button onClick={() => nav(`/add-schedule?date=${selectedDate}`)}>일정 추가</button>
+              <button onClick={() => deleteSchedule()}>완료된 일정 일괄 삭제</button>
+            </div>
           </div>
           )}
         </div>
@@ -103,20 +130,13 @@ function MainCalendar() {
           selectedSchedule.map((sche) => (
             <div key={sche.id}>
               <input type="checkbox" checked={sche.completed} onChange={() => togScheduleComplete(sche.id)}/>
-              <span onClick={() => nav("/view-schedule")}>{sche.title} {sche.time}</span>
+              <span onClick={() => nav(`/view-schedule?id=${sche.id}`)}>{sche.title} {sche.time}</span>
               <button onClick={() => deleteSchedule(sche.id)}>X</button>
             </div>
           ))
         ) : (<p>해당 날짜에는 일정이 없습니다!</p>)}
-
-        <div>
-          <button onClick={() => nav("/add-schedule")}>일정 추가</button>
-          <button onClick={() => deleteSchedule()}>완료된 일정 일괄 삭제</button>
-        </div>
         
       </div>
-      
-
     </div>
   )
 }

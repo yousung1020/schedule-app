@@ -40,7 +40,6 @@ function Login(){
         if (!localStorage.getItem(`${userKey}`)){
           localStorage.setItem(`${userKey}`, JSON.stringify([]));
         }
-        nav(`/calendar`);
 
         nav("/calendar");
         return;
