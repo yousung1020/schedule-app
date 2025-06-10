@@ -40,10 +40,7 @@ function Login(){
         if (!localStorage.getItem(`${userKey}`)){
           localStorage.setItem(`${userKey}`, JSON.stringify([]));
         }
-
-        // 쿼리 파라미터 전달하면서 페이지 이동
-        const queryParams = new URLSearchParams(userInfo);
-        nav(`/calendar?${queryParams.toString()}`);
+        nav(`/calendar`);
         return;
       }
     }
