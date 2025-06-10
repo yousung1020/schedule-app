@@ -26,13 +26,8 @@ function ViewSchedule() {
     setUserInfo(username);
     const userKey = `${username.id}_${username.pwd}`;
     const scheduleData = JSON.parse(localStorage.getItem(userKey));
-    // 배열인지 아닌지 확인
-    if(Array.isArray(scheduleData)){
-      const target = scheduleData.find(item => item.id === scheId);
-      setSchedule(target);
-    } else if(scheduleData.id === scheId){
-      setSchedule(scheduleData);
-    }
+    const target = scheduleData.find(item => item.id === scheId);
+    setSchedule(target);
   },[]);
 
   const gobackbtn = () => {
@@ -49,18 +44,10 @@ function ViewSchedule() {
     if(!window.confirm("정말로 삭제하시겠습니까?")) return;
     const userKey = `${userInfo.id}_${userInfo.pwd}`;
     const scheduleData = JSON.parse(localStorage.getItem(userKey));
-    // 배열인지 아닌지 확인
-    if(Array.isArray(scheduleData)){
-      const DelSche = scheduleData.filter(item => item.id !== scheId);
-      localStorage.setItem(userKey,JSON.stringify(DelSche));
-    }
-    // 아닐 경우 removeItem을 이용해 삭제
-    else if(scheduleData.id === scheId){
-      localStorage.removeItem(userKey);
-    }
-    const {id , pwd} = userInfo;
-    const queryParams = new URLSearchParams({id,pwd});
-    nav(`/calendar?${queryParams.toString()}`);
+    
+    const DelSche = scheduleData.filter(item => item.id !== scheId);
+    localStorage.setItem(userKey,JSON.stringify(DelSche));
+    nav(`/calendar`);
   }
 
   return(
