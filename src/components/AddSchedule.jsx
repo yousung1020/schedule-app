@@ -20,6 +20,7 @@ function AddSchedule() {
     desc:"",
     time:""
   });
+  
    useEffect(() => {
     const userName = JSON.parse(localStorage.getItem('LoginUser'));
     setUserInfo(userName);
