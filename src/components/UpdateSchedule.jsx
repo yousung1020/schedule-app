@@ -58,7 +58,7 @@ function UpdateSchedule() {
     const Updated = scheduleData.map(item =>
         item.id === scheId ? updateSche : item);
     localStorage.setItem(userKey,JSON.stringify(Updated));
-    nav(`/calendar`);
+    nav(`/calendar`,{ state:{selectedDate: updateSche.date}});
   }
   return (
     <div>

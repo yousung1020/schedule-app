@@ -59,10 +59,10 @@ function AddSchedule() {
     })
     const add = [...existing, setid]
     localStorage.setItem(storageKey,JSON.stringify(add));
-    nav(`/calendar`);
+    nav(`/calendar`,{ state:{selectedDate: schedate}});
   }
   const cancelbtn = () => {
-    nav(`/calendar`);
+    nav(`/calendar`,{ state:{selectedDate: schedate}});
   }
   return(
     <div>

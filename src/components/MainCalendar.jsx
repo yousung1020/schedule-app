@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate , useLocation} from "react-router";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import "../css/MainCalendar.css";
@@ -9,10 +9,9 @@ import "moment/locale/ko"
 moment.locale("ko");
 function MainCalendar() {
   
-  // useLocation 함수는 현재 url 정보를 담은 객체를 반환
-  // search에 쿼리 파라미터 값이 있으며, URLSearchParams 객체를 통해 쿼리 파라미터를 객체를 다루듯이 데이터를 편하게 사용 가능!!
+  // useLocation 함수는 state 값을 읽음
   const nav = useNavigate();
-
+  const location = useLocation();
   // 유저의 정보 및 해당 로그인한 유저의 일정 정보 가져오기
   const userInfo = JSON.parse(localStorage.getItem("LoginUser"));
   // 로그인한 유저의 일정이 있으면 해당 일정을 초기값으로, 없으면 빈배열로 초기화
@@ -91,6 +90,13 @@ function MainCalendar() {
 
   }, [userSchedule, selectedDate]);
 
+  useEffect(() => {
+    if(location.state?.selectedDate){
+      setSelectedDate(location.state.selectedDate);
+      nav(location.pathname, { replace: true, state: {} })
+    }
+
+  },[location.state])
   return(
     <div>
       <header style={{"display": "flex"}}>
@@ -101,7 +107,7 @@ function MainCalendar() {
         <div>{userInfo.name}님 환영합니다!</div>
       </header>
       <div className="inner-calendar">
-        <Calendar onChange={handleDate} locale="ko-KR"
+        <Calendar onChange={handleDate} locale="ko-KR" value={selectedDate ? new Date(selectedDate) : null}
         tileContent={({date, view}) => {
           if(view === "month"){
             const formatdate = moment(date).format("YYYY-MM-DD");

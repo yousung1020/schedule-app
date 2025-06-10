@@ -31,7 +31,7 @@ function ViewSchedule() {
   },[]);
 
   const gobackbtn = () => {
-    nav(`/calendar`);
+    nav(`/calendar`,{ state:{selectedDate: Schedule.date}});
   }
 
   const Updatebtn = () => {
@@ -45,7 +45,7 @@ function ViewSchedule() {
     
     const DelSche = scheduleData.filter(item => item.id !== scheId);
     localStorage.setItem(userKey,JSON.stringify(DelSche));
-    nav(`/calendar`);
+    nav(`/calendar`,{ state:{selectedDate: Schedule.date}});
   }
 
   return(
