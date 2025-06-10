@@ -39,6 +39,18 @@ function UpdateSchedule() {
     nav(`/view-schedule?id=${scheId}`);
   }
   const Updatebtn = () => {
+    if(!addSche.title){
+      alert("일정을 입력하세요.");
+      return;
+    }
+    if(!addSche.desc){
+      alert("내용을 입력하세요.");
+      return;
+    }
+    if(!addSche.time){
+      alert("시간을 정하세요.");
+      return;
+    }
     if(!window.confirm("일정을 수정하시겠습니까?")) return;
     
     const userKey = `${userInfo.id}_${userInfo.pwd}`;
