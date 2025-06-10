@@ -33,7 +33,13 @@ function UpdateSchedule() {
       setUpdateSche(scheduleData);
     }
   },[]);
-
+  const handleUserInfo = (e) => {
+    setAddSche({
+        ...addSche,
+        [e.target.name]: e.target.value
+    });
+ 
+  }
   const Cancelbtn = () => {
     nav(`/view-schedule?id=${scheId}`);
   }
