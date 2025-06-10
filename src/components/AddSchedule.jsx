@@ -18,7 +18,8 @@ function AddSchedule() {
     date:"",
     title:"",
     desc:"",
-    time:""
+    time:"",
+    completed:false
   });
    useEffect(() => {
     const userName = JSON.parse(localStorage.getItem('LoginUser'));
