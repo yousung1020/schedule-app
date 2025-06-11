@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate , useLocation} from "react-router";
+import { Button, Container } from "react-bootstrap";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import "../css/MainCalendar.css";
@@ -128,16 +129,25 @@ function MainCalendar() {
             {formatDay(selectedDate)}
             <div>
               {selectedSchedule.length > 0 ? (
-                selectedSchedule.map((sche) => (
-                  <div key={sche.id}>
+                selectedSchedule.map((sche) => {
+                  if(sche.completed === true){
+                    return (<div key={sche.id}>
+                    <input type="checkbox" checked={sche.completed} onChange={() => togScheduleComplete(sche.id)}/>
+                    <span onClick={() => nav(`/view-schedule?id=${sche.id}`)}><del>{sche.title} {sche.time}</del></span>
+                    <button onClick={() => deleteSchedule(sche.id)}>X</button>
+                    </div>)  
+                  } else{
+                    return (<div key={sche.id}>
                     <input type="checkbox" checked={sche.completed} onChange={() => togScheduleComplete(sche.id)}/>
                     <span onClick={() => nav(`/view-schedule?id=${sche.id}`)}>{sche.title} {sche.time}</span>
                     <button onClick={() => deleteSchedule(sche.id)}>X</button>
-                  </div>
-                ))
+                    </div>)
+                  }
+                  
+                })
               ) : (<p>해당 날짜에는 일정이 없습니다!</p>)}
-              <button onClick={() => nav(`/add-schedule?date=${selectedDate}`)}>일정 추가</button>
-              <button onClick={() => deleteSchedule()}>완료된 일정 일괄 삭제</button>
+              <Button className="primary" onClick={() => nav(`/add-schedule?date=${selectedDate}`)}>일정 추가</Button>
+              <Button className="primary" onClick={() => deleteSchedule()}>완료된 일정 일괄 삭제</Button>
             </div>
           </div>
           )}
