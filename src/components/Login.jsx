@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, InputGroup } from 'react-bootstrap';
 import "../css/Login.css";
 import usePageTitle from '../hooks/usePageTitle';
+import { EyeFill , EyeSlashFill } from "react-bootstrap-icons";
 
 function Login(){
   usePageTitle("로그인 페이지");
@@ -15,6 +16,10 @@ function Login(){
 
   const nav = useNavigate(); // 특정 경로로 이동할 수 있는 함수
 
+  const [showpwd , setShowPwd] = useState(false);
+
+  const togglePwd = () => setShowPwd(!showpwd);
+  
   const Register = () => {
     nav(`/register`);
   }
@@ -61,7 +66,10 @@ function Login(){
 
           <Form>
             <Form.Control type="text" name="id" value={userInfo.id} onChange={handleUserInfo} placeholder='아이디'/>
-            <Form.Control type="password" name="pwd" value={userInfo.pwd} onChange={handleUserInfo} placeholder='비밀번호'/>
+            <InputGroup>
+              <Form.Control type={showpwd ? "text" : "password"} name="pwd" value={userInfo.pwd} onChange={handleUserInfo} placeholder='비밀번호'/>
+              <Button onClick={togglePwd}>{showpwd ? <EyeSlashFill/> : <EyeFill/>}</Button>
+            </InputGroup>
           </Form>
 
           <Button onClick={StartCalender} className='game-button'>로그인</Button>
