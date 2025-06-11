@@ -5,15 +5,16 @@ import 'react-calendar/dist/Calendar.css';
 import "../css/MainCalendar.css";
 import moment from "moment";
 import "moment/locale/ko"
+import usePageTitle from "../hooks/usePageTitle";
 
 moment.locale("ko");
 function MainCalendar() {
-  
   // useLocation 함수는 state 값을 읽음
   const nav = useNavigate();
   const location = useLocation();
   // 유저의 정보 및 해당 로그인한 유저의 일정 정보 가져오기
   const userInfo = JSON.parse(localStorage.getItem("LoginUser"));
+  usePageTitle(`${userInfo.name}님의 캘린더`);
   // 로그인한 유저의 일정이 있으면 해당 일정을 초기값으로, 없으면 빈배열로 초기화
   const [userSchedule, setUserSchedule] = useState(() => {
     const scheduleData = localStorage.getItem(`${userInfo.id}_${userInfo.pwd}`) || "[]";
@@ -96,7 +97,8 @@ function MainCalendar() {
       nav(location.pathname, { replace: true, state: {} })
     }
 
-  },[location.state])
+  }, [location.state]);
+
   return(
     <div>
       <header style={{"display": "flex"}}>
@@ -115,7 +117,7 @@ function MainCalendar() {
             
             if(findSchedule){
               return (
-                <div>• {findSchedule.title}</div>
+                <div>•</div>
               )
             }
           }
@@ -125,6 +127,15 @@ function MainCalendar() {
           <div>
             {formatDay(selectedDate)}
             <div>
+              {selectedSchedule.length > 0 ? (
+                selectedSchedule.map((sche) => (
+                  <div key={sche.id}>
+                    <input type="checkbox" checked={sche.completed} onChange={() => togScheduleComplete(sche.id)}/>
+                    <span onClick={() => nav(`/view-schedule?id=${sche.id}`)}>{sche.title} {sche.time}</span>
+                    <button onClick={() => deleteSchedule(sche.id)}>X</button>
+                  </div>
+                ))
+              ) : (<p>해당 날짜에는 일정이 없습니다!</p>)}
               <button onClick={() => nav(`/add-schedule?date=${selectedDate}`)}>일정 추가</button>
               <button onClick={() => deleteSchedule()}>완료된 일정 일괄 삭제</button>
             </div>
@@ -132,15 +143,7 @@ function MainCalendar() {
           )}
         </div>
 
-        {selectedSchedule.length > 0 ? (
-          selectedSchedule.map((sche) => (
-            <div key={sche.id}>
-              <input type="checkbox" checked={sche.completed} onChange={() => togScheduleComplete(sche.id)}/>
-              <span onClick={() => nav(`/view-schedule?id=${sche.id}`)}>{sche.title} {sche.time}</span>
-              <button onClick={() => deleteSchedule(sche.id)}>X</button>
-            </div>
-          ))
-        ) : (<p>해당 날짜에는 일정이 없습니다!</p>)}
+        
         
       </div>
     </div>

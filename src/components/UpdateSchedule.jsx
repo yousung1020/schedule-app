@@ -2,8 +2,11 @@ import { useState,useEffect } from "react";
 import Schedule from "./Schedule";
 import { useLocation, useNavigate } from "react-router";
 import { Button } from "react-bootstrap";
+import usePageTitle from "../hooks/usePageTitle";
 
 function UpdateSchedule() {
+  const username = JSON.parse(localStorage.getItem('LoginUser'));
+  usePageTitle(`${username.name}의 일정 수정`);
   const nav = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -21,7 +24,6 @@ function UpdateSchedule() {
     time:""
   });
   useEffect(()=>{
-    const username = JSON.parse(localStorage.getItem('LoginUser'));
     setUserInfo(username);
     const userKey = `${username.id}_${username.pwd}`;
     const scheduleData = JSON.parse(localStorage.getItem(userKey));

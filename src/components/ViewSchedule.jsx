@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router";
+import usePageTitle from "../hooks/usePageTitle";
 
 
 function ViewSchedule() {
+  const username = JSON.parse(localStorage.getItem('LoginUser'));
+  usePageTitle(`${username.name}님의 일정 정보`);
   const nav = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -22,7 +25,6 @@ function ViewSchedule() {
     time: ""
   });
   useEffect(()=>{
-    const username = JSON.parse(localStorage.getItem('LoginUser'));
     setUserInfo(username);
     const userKey = `${username.id}_${username.pwd}`;
     const scheduleData = JSON.parse(localStorage.getItem(userKey));
@@ -31,7 +33,7 @@ function ViewSchedule() {
   },[]);
 
   const gobackbtn = () => {
-    nav(`/calendar`,{ state:{selectedDate: Schedule.date}});
+    nav(`/calendar`,{ state:{selectedDate: Schedule.date} });
   }
 
   const Updatebtn = () => {

@@ -3,8 +3,13 @@ import Schedule from './Schedule'
 import { Button } from 'react-bootstrap';
 import { v4} from 'uuid';
 import { useLocation, useNavigate } from 'react-router';
+import usePageTitle from '../hooks/usePageTitle';
+
 function AddSchedule() {
   const nav = useNavigate();
+  const userName = JSON.parse(localStorage.getItem('LoginUser'));
+  usePageTitle(`${userName.name}님의 일정 추가 페이지`);
+  
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const schedate = queryParams.get('date');
@@ -13,6 +18,7 @@ function AddSchedule() {
     pwd: "",
     name: "",
   });
+
   const [addSche,setAddSche] = useState({
     id:"",
     date:"",
@@ -23,7 +29,6 @@ function AddSchedule() {
   });
   
    useEffect(() => {
-    const userName = JSON.parse(localStorage.getItem('LoginUser'));
     setUserInfo(userName);
     setAddSche(prev=> ({
       ...prev, date: schedate
@@ -50,6 +55,7 @@ function AddSchedule() {
       alert("시간을 정하세요.");
       return;
     }
+    
     const storageKey = `${userInfo.id}_${userInfo.pwd}`;
     const existing = JSON.parse(localStorage.getItem(storageKey));
     

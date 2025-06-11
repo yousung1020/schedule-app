@@ -1,10 +1,13 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
+import usePageTitle from "../hooks/usePageTitle";
 function NotFound() {
-    const nav = useNavigate();
-    const First = () =>{
-        nav('/');
-    }
+  usePageTitle("여기가 어디여");
+  const nav = useNavigate();
+  const First = () =>{
+      nav('/');
+  }
+
   return (
     <div style={{ padding: '40px', textAlign: 'center' }}>
       <h1>404</h1>

@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Button, Container, Form } from "react-bootstrap";
 import '../css/Register.css'
+import usePageTitle from "../hooks/usePageTitle";
 
 function Register() {
+  usePageTitle("회원가입 페이지");
   const [error, setError] = useState({
     id: "",
     pwd: "",
@@ -72,10 +74,10 @@ function Register() {
         <Form.Control type="text" name="name" value={userInfo.name} onChange={handleUserInfo} placeholder="이름"/>
         {error.name && <div className="regi-error">{error.name}</div>}
 
-      <div className="regi-button">
-        <Button variant="secondary" onClick={del}>취소하기</Button>
-        <Button variant="primary" onClick={fin}>회원가입</Button>
-      </div>
+        <div className="regi-button">
+          <Button variant="secondary" onClick={del}>취소하기</Button>
+          <Button variant="primary" onClick={fin}>회원가입</Button>
+        </div>
       </Form>
     </Container>
   )

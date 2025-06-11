@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import "../css/Login.css";
+import usePageTitle from '../hooks/usePageTitle';
 
 function Login(){
+  usePageTitle("로그인 페이지");
   const localStorageKey = "userInfo";
   // 사용자 이름 및 전화번호 입력 상태
   const [userInfo, setUserInfo] = useState({
@@ -48,7 +50,7 @@ function Login(){
     
     // for문을 다 돌았음에도 일치하는 정보가 없으면 로그인 실패!
     alert("아이디 또는 비밀번호가 올바르지 않습니다.");
-    console.log("롸");
+    console.log("롸?");
   }
 
   return(
@@ -57,8 +59,11 @@ function Login(){
         <div className='input-section'>
           <h2>사용자 정보 입력</h2>
 
-          <input type="text" name="id" value={userInfo.id} onChange={handleUserInfo} placeholder='아이디'/>
-          <input type="password" name="pwd" value={userInfo.pwd} onChange={handleUserInfo} placeholder='비밀번호'/>
+          <Form>
+            <Form.Control type="text" name="id" value={userInfo.id} onChange={handleUserInfo} placeholder='아이디'/>
+            <Form.Control type="password" name="pwd" value={userInfo.pwd} onChange={handleUserInfo} placeholder='비밀번호'/>
+          </Form>
+
           <Button onClick={StartCalender} className='game-button'>로그인</Button>
         </div>
         <div className='el-info-section'>
