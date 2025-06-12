@@ -6,7 +6,8 @@ import UpdateSchedule from './components/UpdateSchedule';
 import NotFound from './components/NotFound';
 import ViewSchedule from './components/ViewSchedule';
 import Register from './components/Register';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-calendar/dist/Calendar.css';
 
 function App(){
     return (

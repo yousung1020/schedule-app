@@ -72,11 +72,11 @@ function Login(){
             </InputGroup>
           </Form>
 
-          <Button onClick={StartCalender} className='game-button'>로그인</Button>
+          <Button onClick={StartCalender} variant='primary'>로그인</Button>
         </div>
         <div className='el-info-section'>
           <h1>회원가입</h1>
-          <Button onClick={Register} className='game-button'>Sign Up</Button>
+          <Button onClick={Register} variant='primary'>Sign Up</Button>
         </div>
       </div>
         

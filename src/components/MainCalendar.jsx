@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate , useLocation} from "react-router";
-import { Button, Container } from "react-bootstrap";
+import { Button, Container, Navbar, Nav, Col, Row, Card } from "react-bootstrap";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import "../css/MainCalendar.css";
@@ -100,64 +100,128 @@ function MainCalendar() {
 
   }, [location.state]);
 
-  return(
-    <div>
-      <header style={{"display": "flex"}}>
-        <button onClick={() => {
-          localStorage.removeItem("LoginUser");
-          nav("/");
-          }}>로그아웃</button>
-        <div>{userInfo.name}님 환영합니다!</div>
+  return (
+    <>
+      {/* 커스텀 헤더 */}
+      <header className="custom-header bg-dark text-white py-3 d-flex justify-content-between align-items-center px-4">
+        <h3 className="mb-0">{userInfo.name}님의 캘린더</h3>
+        <Button
+          variant="outline-light"
+          onClick={() => {
+            localStorage.removeItem("LoginUser");
+            nav("/");
+          }}
+        >
+          로그아웃
+        </Button>
       </header>
-      <div className="inner-calendar">
-        <Calendar onChange={handleDate} locale="ko-KR" value={selectedDate ? new Date(selectedDate) : null}
-        tileContent={({date, view}) => {
-          if(view === "month"){
-            const formatdate = moment(date).format("YYYY-MM-DD");
-            const findSchedule = userSchedule.find((sche) => formatdate === sche.date);
-            
-            if(findSchedule){
-              return (
-                <div>•</div>
-              )
-            }
-          }
-        }}/>
-        <div>
-          {selectedDate && (
-          <div>
-            {formatDay(selectedDate)}
-            <div>
-              {selectedSchedule.length > 0 ? (
-                selectedSchedule.map((sche) => {
-                  if(sche.completed === true){
-                    return (<div key={sche.id}>
-                    <input type="checkbox" checked={sche.completed} onChange={() => togScheduleComplete(sche.id)}/>
-                    <span onClick={() => nav(`/view-schedule?id=${sche.id}`)}><del>{sche.title} {sche.time}</del></span>
-                    <button onClick={() => deleteSchedule(sche.id)}>X</button>
-                    </div>)  
-                  } else{
-                    return (<div key={sche.id}>
-                    <input type="checkbox" checked={sche.completed} onChange={() => togScheduleComplete(sche.id)}/>
-                    <span onClick={() => nav(`/view-schedule?id=${sche.id}`)}>{sche.title} {sche.time}</span>
-                    <button onClick={() => deleteSchedule(sche.id)}>X</button>
-                    </div>)
-                  }
-                  
-                })
-              ) : (<p>해당 날짜에는 일정이 없습니다!</p>)}
-              <Button className="primary" onClick={() => nav(`/add-schedule?date=${selectedDate}`)}>일정 추가</Button>
-              <Button className="primary" onClick={() => deleteSchedule()}>완료된 일정 일괄 삭제</Button>
-            </div>
-          </div>
-          )}
-        </div>
 
-        
-        
-      </div>
-    </div>
-  )
+      {/* 메인 콘텐츠 영역 */}
+      <Container className="main-calendar-container py-4">
+        <Row className="justify-content-center">
+          {/* 캘린더 섹션: Col 크기 조정 */}
+          <Col xs={12} md={7} lg={6} className="calendar-section">
+            <Card className="calendar-card">
+              <Card.Body className="p-3 p-md-4">
+                <Calendar
+                  onChange={handleDate}
+                  locale="ko"
+                  value={selectedDate ? moment(selectedDate).toDate() : null}
+                  tileContent={({ date, view }) => {
+                    if (view === "month") {
+                      const formatdate = moment(date).format("YYYY-MM-DD");
+                      const findSchedule = userSchedule.find((sche) => formatdate === sche.date);
+                      if (findSchedule) {
+                        return (
+                          <div className="has-schedule-dot"></div>
+                        );
+                      }
+                    }
+                    return null;
+                  }}
+                  formatDay={(locale, date) => moment(date).format('D')}
+                  tileClassName={({ date, view }) => {
+                    if (view === 'month') {
+                      const day = date.getDay(); // 0 = 일요일, 6 = 토요일
+                      const classes = [];
+
+                      // 현재 달이 아닌 날짜에 대한 클래스 추가
+                      // moment(date).month()는 0부터 시작, moment(new Date()).month()도 0부터 시작
+                      // 현재 캘린더에 표시되는 달 (예: 2025년 6월)과 실제 날짜의 달이 다르면 other-month 클래스 추가
+                      if (date.getMonth() !== new Date(moment(selectedDate || new Date()).startOf('month')).getMonth()) {
+                        classes.push('other-month-day');
+                      }
+
+                      // 토요일에 파란색 클래스 추가
+                      if (day === 6) { // 토요일
+                        classes.push('saturday-day');
+                      }
+                      // 일요일에 빨간색 클래스 추가
+                      else if (day === 0) { // 일요일
+                        classes.push('sunday-day');
+                      }
+
+                      return classes.length > 0 ? classes : null;
+                    }
+                    return null;
+                  }}
+                />
+              </Card.Body>
+            </Card>
+          </Col>
+
+          {/* 일정 정보 섹션 */}
+          <Col xs={12} md={5} lg={6} className="schedule-info-section mt-4 mt-md-0">
+            <Card className="schedule-info-card">
+              <Card.Body className="p-3 p-md-4">
+                {selectedDate ? (
+                  <>
+                    <h4 className="schedule-info-title">{formatDay(selectedDate)} 일정</h4>
+                    
+                    <div className="schedule-actions mb-3 d-flex flex-wrap justify-content-end">
+                      <Button variant="primary" onClick={() => nav(`/add-schedule?date=${selectedDate}`)} className="mb-2 mb-sm-0 me-sm-2">일정 추가</Button>
+                      <Button variant="danger" onClick={() => deleteSchedule()}>완료된 일정 일괄 삭제</Button>
+                    </div>
+
+                    {selectedSchedule.length > 0 ? (
+                      <div className="schedule-items-list">
+                        {selectedSchedule.map((sche) => (
+                          <div key={sche.id} className="schedule-item-wrapper d-flex align-items-center justify-content-between mb-2">
+                            <div className="d-flex align-items-center flex-grow-1">
+                              <input
+                                type="checkbox"
+                                checked={sche.completed}
+                                onChange={() => togScheduleComplete(sche.id)}
+                                className="form-check-input me-2"
+                              />
+                              <span
+                                onClick={() => nav(`/view-schedule?id=${sche.id}`)}
+                                className={`schedule-item-title ${sche.completed ? "text-decoration-line-through text-muted" : ""}`}
+                                style={{ cursor: 'pointer' }}
+                              >
+                                {sche.title} {sche.time}
+                              </span>
+                            </div>
+                            <Button variant="outline-danger" size="sm" onClick={() => deleteSchedule(sche.id)}>X</Button>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-muted mt-3 text-center">해당 날짜에는 일정이 없습니다!</p>
+                    )}
+                  </>
+                ) : (
+                  <div className="no-date-selected text-center py-5">
+                    <p className="text-muted">날짜를 선택하여 일정을 확인하거나 추가하세요.</p>
+                  </div>
+                )}
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
 }
 
 export default MainCalendar;
