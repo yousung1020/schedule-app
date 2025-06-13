@@ -32,6 +32,12 @@ function Login(){
 
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter"){
+      e.preventDefault();  // 새로고침 방지
+      StartCalender();
+    }
+  }
   const StartCalender = () => {
     // 로컬스토리지에 아무 값도 없으면 빈 배열로 초기화
     const Users = JSON.parse(localStorage.getItem(localStorageKey)) || [];
@@ -65,14 +71,14 @@ function Login(){
           <h2>사용자 정보 입력</h2>
 
           <Form>
-            <Form.Control type="text" name="id" value={userInfo.id} onChange={handleUserInfo} placeholder='아이디'/>
+            <Form.Control type="text" name="id" value={userInfo.id} onChange={handleUserInfo} onKeyDown={handleKeyDown} placeholder='아이디'/>
             <InputGroup>
-              <Form.Control type={showpwd ? "text" : "password"} name="pwd" value={userInfo.pwd} onChange={handleUserInfo} placeholder='비밀번호'/>
+              <Form.Control type={showpwd ? "text" : "password"} name="pwd" value={userInfo.pwd} onChange={handleUserInfo} onKeyDown={handleKeyDown} placeholder='비밀번호'/>
               <Button onClick={togglePwd}>{showpwd ? <EyeSlashFill/> : <EyeFill/>}</Button>
             </InputGroup>
           </Form>
 
-          <Button onClick={StartCalender} variant='primary'>로그인</Button>
+          <Button type="button" onClick={StartCalender} variant='primary'>로그인</Button>
         </div>
         <div className='el-info-section'>
           <h1>회원가입</h1>
