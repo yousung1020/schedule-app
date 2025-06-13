@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import Schedule from './Schedule'
-import { Button } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import { v4} from 'uuid';
 import { useLocation, useNavigate } from 'react-router';
 import usePageTitle from '../hooks/usePageTitle';
+import '../css/AddSchedule.css';
 
 function AddSchedule() {
   const nav = useNavigate();
-  const userName = JSON.parse(localStorage.getItem('LoginUser'));
-  usePageTitle(`${userName.name}님의 일정 추가 페이지`);
+  const username = JSON.parse(localStorage.getItem('LoginUser'));
+  usePageTitle(`${username.name}님의 일정 추가 페이지`);
   
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -29,7 +30,7 @@ function AddSchedule() {
   });
   
    useEffect(() => {
-    setUserInfo(userName);
+    setUserInfo(username);
     setAddSche(prev=> ({
       ...prev, date: schedate
     }));
@@ -71,8 +72,8 @@ function AddSchedule() {
     nav(`/calendar`,{ state:{selectedDate: schedate}});
   }
   return(
-    <div>
-      <div>
+    <Container className='add-container'>
+      <h2 className='page-title'>일정 추가</h2>
         <Schedule
           date={addSche.date}
           title={addSche.title}
@@ -80,10 +81,11 @@ function AddSchedule() {
           time={addSche.time}
           onChange={handleUserInfo}
         />
-      </div>
-      <Button type='button' onClick={cancelbtn}>취소하기</Button>
-      <Button type='button' onClick={addbtn}>추가하기</Button>
-    </div>
+        <div className='button-group'>
+          <Button type='button' variant='secondary' onClick={cancelbtn}>취소하기</Button>
+          <Button type='button' onClick={addbtn}>추가하기</Button>
+        </div>
+    </Container>
   )
 }
 

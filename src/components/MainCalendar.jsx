@@ -171,7 +171,7 @@ function MainCalendar() {
               <Card.Body className="p-3 p-md-4">
                 {selectedDate ? (
                   <>
-                    <h4 className="schedule-info-title">{formatDay(selectedDate)} 일정</h4>
+                    <h4 className="schedule-info-title">{moment(selectedDate).format("D일 일정 dddd")}</h4>
                     
                     <div className="schedule-actions mb-3 d-flex flex-wrap justify-content-start">
                       <Button variant="primary" onClick={() => nav(`/add-schedule?date=${selectedDate}`)} className="mb-2 mb-sm-0 me-sm-2">일정 추가</Button>
@@ -194,7 +194,7 @@ function MainCalendar() {
                                 className={`schedule-item-title ${sche.completed ? "text-decoration-line-through text-muted" : ""}`}
                                 style={{ cursor: 'pointer' }}
                               >
-                                {sche.title} {sche.time}
+                                {sche.title} {moment(sche.time, "HH:mm").format("A hh:mm")}
                               </span>
                             </div>
                             <Button variant="outline-danger" size="sm" onClick={() => deleteSchedule(sche.id)}>X</Button>

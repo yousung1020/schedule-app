@@ -1,8 +1,9 @@
 import { useState,useEffect } from "react";
 import Schedule from "./Schedule";
 import { useLocation, useNavigate } from "react-router";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import usePageTitle from "../hooks/usePageTitle";
+import '../css/UpdateSchedule.css';
 
 function UpdateSchedule() {
   const username = JSON.parse(localStorage.getItem('LoginUser'));
@@ -63,8 +64,8 @@ function UpdateSchedule() {
     nav(`/calendar`,{ state:{selectedDate: updateSche.date}});
   }
   return (
-    <div>
-      <div>
+    <Container className="update-container">
+        <h2 className="page-title">일정 수정</h2>
         <Schedule
           date={updateSche.date}
           title={updateSche.title}
@@ -72,12 +73,11 @@ function UpdateSchedule() {
           time={updateSche.time}
           onChange={handleUserInfo}
         />
-      </div>
-      <div>
-        <Button onClick={Cancelbtn}>취소하기</Button>
+      <div className="button-group">
+        <Button variant='secondary' onClick={Cancelbtn}>취소하기</Button>
         <Button onClick={Updatebtn}>수정하기</Button>
       </div>
-    </div>
+    </Container>
   )
 }
 
