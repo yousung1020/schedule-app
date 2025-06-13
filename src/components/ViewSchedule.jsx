@@ -63,28 +63,28 @@ function ViewSchedule() {
         
         <Form>
           <h2 className="mx-3 mb-0 text-center">일정 정보</h2>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3 px-3">
             <Form.Label>날짜</Form.Label>
             <Form.Control type="text" readOnly value={Schedule.date} />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3 px-3">
             <Form.Label>일정 제목</Form.Label>
             <Form.Control type="text" readOnly value={Schedule.title} />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3 px-3">
             <Form.Label>일정 설명</Form.Label>
             <Form.Control as="textarea" rows={3} readOnly value={Schedule.desc} />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3 px-3">
             <Form.Label>시간</Form.Label>
             <Form.Control type="text" readOnly value={moment(Schedule.time, "HH:mm").format("A h시 mm분")} />
           </Form.Group>
 
           <div className="d-flex justify-content-end gap-2">
-            <Button onClick={Updatebtn} variant="warning">수정하기</Button>
+            <Button onClick={Updatebtn} variant="primary">수정하기</Button>
             <Button onClick={Deletebtn} variant="danger">삭제하기</Button>
           </div>
         </Form>

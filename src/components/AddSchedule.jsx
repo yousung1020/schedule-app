@@ -74,7 +74,7 @@ function AddSchedule() {
   return(
     <Container className='add-container'>
       <h2 className='page-title'>일정 추가</h2>
-        <Schedule
+        <Schedule className='px-3'
           date={addSche.date}
           title={addSche.title}
           desc={addSche.desc}

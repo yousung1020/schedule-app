@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate , useLocation} from "react-router";
-import { Button, Container, Navbar, Nav, Col, Row, Card } from "react-bootstrap";
+import { Button, Container, Col, Row, Card } from "react-bootstrap";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import "../css/MainCalendar.css";
@@ -34,13 +34,6 @@ function MainCalendar() {
 
     setSelectedDate(formatDate);
     console.log(selectedDate);
-  }
-
-  // 날짜를 일, 요일로 포맷팅
-  const formatDay = (selectedDate) => {
-    const EngdayOfWeek = moment(selectedDate).format("dddd");
-
-    return `${moment(selectedDate).format("DD")}일 ${EngdayOfWeek}`
   }
 
   const togScheduleComplete = (scheId) => {
@@ -171,7 +164,7 @@ function MainCalendar() {
               <Card.Body className="p-3 p-md-4">
                 {selectedDate ? (
                   <>
-                    <h4 className="schedule-info-title">{moment(selectedDate).format("D일 일정 dddd")}</h4>
+                    <h4 className="schedule-info-title">{moment(selectedDate).format("D일 dddd 일정")}</h4>
                     
                     <div className="schedule-actions mb-3 d-flex flex-wrap justify-content-start">
                       <Button variant="primary" onClick={() => nav(`/add-schedule?date=${selectedDate}`)} className="mb-2 mb-sm-0 me-sm-2">일정 추가</Button>
@@ -194,7 +187,7 @@ function MainCalendar() {
                                 className={`schedule-item-title ${sche.completed ? "text-decoration-line-through text-muted" : ""}`}
                                 style={{ cursor: 'pointer' }}
                               >
-                                {sche.title} {moment(sche.time, "HH:mm").format("A hh:mm")}
+                                {sche.title} - {moment(sche.time, "HH:mm").format("A hh:mm")}
                               </span>
                             </div>
                             <Button variant="outline-danger" size="sm" onClick={() => deleteSchedule(sche.id)}>X</Button>
