@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router";
 import usePageTitle from "../hooks/usePageTitle";
+import moment from "moment";
+import 'moment/dist/locale/ko'
 import '../css/ViewSchedule.css';
 
 function ViewSchedule() {
@@ -78,17 +80,12 @@ function ViewSchedule() {
 
           <Form.Group className="mb-3">
             <Form.Label>시간</Form.Label>
-            <Form.Control type="text" readOnly value={Schedule.time} />
+            <Form.Control type="text" readOnly value={moment(Schedule.time, "HH:mm").format("A h시 mm분")} />
           </Form.Group>
 
-
           <div className="d-flex justify-content-end gap-2">
-            <Button onClick={Updatebtn} variant="warning">
-              수정하기
-            </Button>
-            <Button onClick={Deletebtn} variant="danger">
-              삭제하기
-            </Button>
+            <Button onClick={Updatebtn} variant="warning">수정하기</Button>
+            <Button onClick={Deletebtn} variant="danger">삭제하기</Button>
           </div>
         </Form>
       </Container>

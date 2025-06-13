@@ -8,8 +8,8 @@ import '../css/AddSchedule.css';
 
 function AddSchedule() {
   const nav = useNavigate();
-  const userName = JSON.parse(localStorage.getItem('LoginUser'));
-  usePageTitle(`${userName.name}님의 일정 추가 페이지`);
+  const username = JSON.parse(localStorage.getItem('LoginUser'));
+  usePageTitle(`${username.name}님의 일정 추가 페이지`);
   
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -30,7 +30,7 @@ function AddSchedule() {
   });
   
    useEffect(() => {
-    setUserInfo(userName);
+    setUserInfo(username);
     setAddSche(prev=> ({
       ...prev, date: schedate
     }));

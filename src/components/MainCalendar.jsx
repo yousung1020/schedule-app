@@ -188,7 +188,7 @@ function MainCalendar() {
                                 className={`schedule-item-title ${sche.completed ? "text-decoration-line-through text-muted" : ""}`}
                                 style={{ cursor: 'pointer' }}
                               >
-                                {sche.title} {moment(sche.time, "HH:mm").format("A h시 mm분")}
+                                {sche.title} {moment(sche.time, "HH:mm").format("A hh:mm")}
                               </span>
                             </div>
                             <Button variant="outline-danger" size="sm" onClick={() => deleteSchedule(sche.id)}>X</Button>
