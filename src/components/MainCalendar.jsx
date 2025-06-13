@@ -5,10 +5,9 @@ import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import "../css/MainCalendar.css";
 import moment from "moment";
-import "moment/locale/ko"
+import "moment/dist/locale/ko";
 import usePageTitle from "../hooks/usePageTitle";
 
-moment.locale("ko");
 function MainCalendar() {
   // useLocation 함수는 state 값을 읽음
   const nav = useNavigate();
@@ -39,29 +38,9 @@ function MainCalendar() {
 
   // 날짜를 일, 요일로 포맷팅
   const formatDay = (selectedDate) => {
-    const EngdayOfWeek = moment(selectedDate).format("ddd");
-    let korWeek = ""
+    const EngdayOfWeek = moment(selectedDate).format("dddd");
 
-    // 하.. 영문 날짜 Mon~Sun 를 한국어로 변경..
-    if(EngdayOfWeek === "Mon"){
-      korWeek = "월요일";
-    } else if(EngdayOfWeek === "Tue"){
-      korWeek = "화요일";
-    } else if(EngdayOfWeek === "Wed"){
-      korWeek = "수요일";
-    } else if(EngdayOfWeek === "Thu"){
-      korWeek = "목요일";
-    } else if(EngdayOfWeek === "Fri"){
-      korWeek = "금요일";
-    } else if(EngdayOfWeek === "Sat"){
-      korWeek = "토요일";
-    } else if(EngdayOfWeek === "Sun"){
-      korWeek = "일요일";
-    } else {
-      korWeek = "완전 버그입니다 ㅠㅠ";
-    }
-
-    return `${moment(selectedDate).format("DD")}일 ${korWeek}`
+    return `${moment(selectedDate).format("DD")}일 ${EngdayOfWeek}`
   }
 
   const togScheduleComplete = (scheId) => {
