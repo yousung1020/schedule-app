@@ -5,7 +5,7 @@ import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import "../css/MainCalendar.css";
 import moment from "moment";
-import "moment/locale/ko"
+import 'moment/dist/locale/ko'
 import usePageTitle from "../hooks/usePageTitle";
 
 moment.locale("ko");
@@ -35,33 +35,6 @@ function MainCalendar() {
 
     setSelectedDate(formatDate);
     console.log(selectedDate);
-  }
-
-  // 날짜를 일, 요일로 포맷팅
-  const formatDay = (selectedDate) => {
-    const EngdayOfWeek = moment(selectedDate).format("ddd");
-    let korWeek = ""
-
-    // 하.. 영문 날짜 Mon~Sun 를 한국어로 변경..
-    if(EngdayOfWeek === "Mon"){
-      korWeek = "월요일";
-    } else if(EngdayOfWeek === "Tue"){
-      korWeek = "화요일";
-    } else if(EngdayOfWeek === "Wed"){
-      korWeek = "수요일";
-    } else if(EngdayOfWeek === "Thu"){
-      korWeek = "목요일";
-    } else if(EngdayOfWeek === "Fri"){
-      korWeek = "금요일";
-    } else if(EngdayOfWeek === "Sat"){
-      korWeek = "토요일";
-    } else if(EngdayOfWeek === "Sun"){
-      korWeek = "일요일";
-    } else {
-      korWeek = "완전 버그입니다 ㅠㅠ";
-    }
-
-    return `${moment(selectedDate).format("DD")}일 ${korWeek}`
   }
 
   const togScheduleComplete = (scheId) => {
@@ -192,7 +165,7 @@ function MainCalendar() {
               <Card.Body className="p-3 p-md-4">
                 {selectedDate ? (
                   <>
-                    <h4 className="schedule-info-title">{formatDay(selectedDate)} 일정</h4>
+                    <h4 className="schedule-info-title">{moment(selectedDate).format("D일 일정 dddd")}</h4>
                     
                     <div className="schedule-actions mb-3 d-flex flex-wrap justify-content-start">
                       <Button variant="primary" onClick={() => nav(`/add-schedule?date=${selectedDate}`)} className="mb-2 mb-sm-0 me-sm-2">일정 추가</Button>
@@ -215,7 +188,7 @@ function MainCalendar() {
                                 className={`schedule-item-title ${sche.completed ? "text-decoration-line-through text-muted" : ""}`}
                                 style={{ cursor: 'pointer' }}
                               >
-                                {sche.title} {sche.time}
+                                {sche.title} {moment(sche.time, "HH:mm").format("A h시 mm분")}
                               </span>
                             </div>
                             <Button variant="outline-danger" size="sm" onClick={() => deleteSchedule(sche.id)}>X</Button>

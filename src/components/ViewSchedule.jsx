@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Container, Form } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router";
 import usePageTitle from "../hooks/usePageTitle";
-
+import '../css/ViewSchedule.css';
 
 function ViewSchedule() {
   const username = JSON.parse(localStorage.getItem('LoginUser'));
@@ -50,23 +50,50 @@ function ViewSchedule() {
     nav(`/calendar`,{ state:{selectedDate: Schedule.date}});
   }
 
-  return(
+  return (
     <div>
-      <Button onClick={gobackbtn}>뒤로가기</Button>
-      <form>
-        <div>선택한 날짜</div>
-        <div>{Schedule.date}</div>
-        <div>일정</div>
-        <div>{Schedule.title}</div>
-        <div>내용</div>
-        <div>{Schedule.desc}</div>
-        <div>시간</div>
-        <div>{Schedule.time}</div>
-      </form>
-      <Button onClick={Updatebtn}>수정하기</Button>
-      <Button onClick={Deletebtn}>삭제하기</Button>
+      <div className="mb-3">
+        <Button onClick={gobackbtn} variant="secondary" >
+          ← 뒤로가기
+        </Button>
+      </div>
+      <Container className="view-con">
+        
+        <Form>
+          <h2 className="mx-3 mb-0 text-center">일정 정보</h2>
+          <Form.Group className="mb-3">
+            <Form.Label>날짜</Form.Label>
+            <Form.Control type="text" readOnly value={Schedule.date} />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>일정 제목</Form.Label>
+            <Form.Control type="text" readOnly value={Schedule.title} />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>일정 설명</Form.Label>
+            <Form.Control as="textarea" rows={3} readOnly value={Schedule.desc} />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>시간</Form.Label>
+            <Form.Control type="text" readOnly value={Schedule.time} />
+          </Form.Group>
+
+
+          <div className="d-flex justify-content-end gap-2">
+            <Button onClick={Updatebtn} variant="warning">
+              수정하기
+            </Button>
+            <Button onClick={Deletebtn} variant="danger">
+              삭제하기
+            </Button>
+          </div>
+        </Form>
+      </Container>
     </div>
-  )
+  );
 }
 
 export default ViewSchedule;

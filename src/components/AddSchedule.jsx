@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import Schedule from './Schedule'
-import { Button } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import { v4} from 'uuid';
 import { useLocation, useNavigate } from 'react-router';
 import usePageTitle from '../hooks/usePageTitle';
+import '../css/AddSchedule.css';
 
 function AddSchedule() {
   const nav = useNavigate();
@@ -71,8 +72,8 @@ function AddSchedule() {
     nav(`/calendar`,{ state:{selectedDate: schedate}});
   }
   return(
-    <div>
-      <div>
+    <Container className='add-container'>
+      <h2 className='page-title'>일정 추가</h2>
         <Schedule
           date={addSche.date}
           title={addSche.title}
@@ -80,10 +81,11 @@ function AddSchedule() {
           time={addSche.time}
           onChange={handleUserInfo}
         />
-      </div>
-      <Button type='button' onClick={cancelbtn}>취소하기</Button>
-      <Button type='button' onClick={addbtn}>추가하기</Button>
-    </div>
+        <div className='button-group'>
+          <Button type='button' variant='secondary' onClick={cancelbtn}>취소하기</Button>
+          <Button type='button' onClick={addbtn}>추가하기</Button>
+        </div>
+    </Container>
   )
 }
 
