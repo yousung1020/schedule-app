@@ -1,12 +1,53 @@
-# React + Vite
+# 캘린더 일정 관리 웹 애플리케이션
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Image of 캘린더 스크린샷 (예시 - 실제 프로젝트 화면으로 교체하세요)](https://github.com/your-username/your-repo/blob/main/screenshot.png?raw=true)
+*(위 이미지는 예시입니다. 실제 프로젝트의 메인 화면 스크린샷으로 교체해 주세요.)*
 
-Currently, two official plugins are available:
+## 📝 프로젝트 소개
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+이 프로젝트는 React와 React-Bootstrap을 활용하여 개발된 사용자 친화적인 캘린더 기반 일정 관리 웹 애플리케이션입니다. 개인화된 로그인 시스템을 통해 각 사용자는 자신만의 일정을 효율적으로 관리할 수 있으며, 직관적인 인터페이스로 일정을 손쉽게 추가, 조회, 수정 및 삭제할 수 있습니다.
 
-## Expanding the ESLint configuration
+## ✨ 주요 기능
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+이 애플리케이션은 다음과 같은 핵심 기능들을 제공합니다:
+
+### 🔐 사용자 인증 및 관리
+* **로그인/로그아웃**: 로컬 스토리지를 활용하여 사용자 정보를 저장하고, 안전한 로그인/로그아웃 기능을 제공합니다.
+* **개인화된 캘린더**: 로그인한 사용자의 이름으로 캘린더 제목이 표시되어 개인화된 경험을 제공합니다.
+
+### 📅 캘린더 뷰 및 상호작용
+* **월별 캘린더**: `react-calendar` 컴포넌트를 사용하여 월별 캘린더를 표시합니다.
+* **날짜 선택**: 캘린더에서 특정 날짜를 클릭하여 해당 날짜의 일정을 확인하거나 추가할 수 있습니다.
+* **시각적 강조**:
+    * **오늘 날짜**: 현재 날짜는 특별한 배경색으로 시각적으로 강조됩니다.
+    * **선택된 날짜**: 사용자가 선택한 날짜는 파란색 배경과 흰색 글자로 명확하게 표시됩니다.
+    * **주말 표시**: 토요일은 파란색, 일요일은 빨간색 글자로 표시되어 주말을 쉽게 구분할 수 있습니다.
+    * **일정 유무 표시**: 일정이 있는 날짜 하단에는 작은 점이 표시되어 일정이 있음을 직관적으로 알려줍니다.
+    * **다른 달 날짜 흐리게**: 현재 보고 있는 달이 아닌 날짜는 흐리게 표시하여 가독성을 높였습니다.
+
+### ✅ 일정 관리
+* **일정 추가**: 선택된 날짜에 대한 새로운 일정을 추가하는 페이지로 이동하여 상세 정보를 입력할 수 있습니다.
+* **일정 조회**: 선택된 날짜의 모든 일정을 시간 순서대로 목록 형태로 보여줍니다. 일정이 없을 경우 "해당 날짜에는 일정이 없습니다!" 메시지가 표시됩니다.
+* **일정 완료 토글**: 각 일정 옆의 체크박스를 통해 완료 여부를 토글할 수 있습니다. 완료된 일정은 취소선과 함께 회색 텍스트로 표시됩니다.
+* **일정 상세 보기**: 일정을 클릭하면 해당 일정의 상세 정보를 볼 수 있는 페이지로 이동합니다.
+* **개별 일정 삭제**: 각 일정 아이템 옆의 'X' 버튼을 클릭하여 개별 일정을 삭제할 수 있습니다.
+* **완료된 일정 일괄 삭제**: 선택된 날짜의 모든 완료된 일정을 한 번에 삭제할 수 있는 기능을 제공합니다.
+
+### 🖥️ 사용자 인터페이스 (UI)
+* **반응형 디자인**: 다양한 화면 크기(모바일, 태블릿, 데스크톱)에서 최적의 사용성을 제공하도록 레이아웃이 유연하게 조절됩니다.
+* **깔끔한 카드 디자인**: 캘린더와 일정 정보는 각각 깔끔한 카드 형태로 표시되어 시각적 분리를 명확히 합니다.
+
+## 🛠️ 기술 스택
+
+* **Frontend**:
+    * React (v19.1.0)
+    * React-Bootstrap (v2.10.10)
+    * React-Calendar (v6.0.0, **최신 버전으로 업데이트 권장**)
+    * Moment.js (v2.30.1) - 날짜/시간 처리
+    * React Router DOM (v6.x.x) - SPA 라우팅
+    * uuid (v11.1.0) - 고유 ID 생성
+* **Styling**:
+    * CSS (컴포넌트별 및 전역 스타일)
+    * Bootstrap 5 (v5.3.6) - 반응형 UI
+* **Data Storage**:
+    * Local Storage - 사용자 일정 데이터 저장 및 관리
